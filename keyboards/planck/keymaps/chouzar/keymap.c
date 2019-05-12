@@ -45,8 +45,6 @@ enum unicode_names {
 };
 
 const uint32_t PROGMEM unicode_map[] = {
-  [L_ENNE] = 0x00F1, // ñ
-  [H_ENNE] = 0x00D1, // Ñ
   [S_EXCL] = 0x00A1, // ¡
   [E_EXCL] = 0x0021, // !
   [S_QSTN] = 0x00BF, // ¿
@@ -77,21 +75,39 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_LCTL, KC_LGUI, KC_LALT, INTERACT,LOWER,   KC_SPC,  KC_SPC,  RAISE,  KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT
 ),
 
-/* Lower
+/* Interact
  * ,-----------------------------------------------------------------------------------.
  * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  |   -  |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |   ¡  |   !  |      |      |      |      |      |      |      |   '  |   [  |
+ * |      |   ¿  |   ?  |      |      |      |      |      |      |      |   '  |      |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |   ¿  |   ?  |      |      |      |      |      |      |      |   \  |      |
+ * |      |   ¡  |   !  |      |      |      |      |      |      |   \  |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |             |      | Home | PgDn | PgUp | End |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_INTERACT] = LAYOUT_planck_grid(
+  KC_GRV,    KC_1,      KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
+  _______, X(S_QSTN), X(E_QSTN), _______, _______, _______, _______, _______, _______, _______, KC_QUOT, KC_DQT,
+  _______, X(S_EXCL), X(E_EXCL), _______, _______, _______, _______, _______, _______, KC_BSLS, _______, _______,
+  _______,   _______,   _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
+),
+
+/* Lower
+ * ,-----------------------------------------------------------------------------------.
+ * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   (  |   )  |   =  |
+ * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * |      |   ¿  |   ?  |      |      |      |      |      |      |   [  |   ]  |      |
+ * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * |      |   ¡  |   !  |      |      |      |      |      |      |   \  |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |             |      | Home | PgDn | PgUp | End  |
  * `-----------------------------------------------------------------------------------'
  */
 [_LOWER] = LAYOUT_planck_grid(
-  KC_GRV,    KC_1,      KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
-  _______, X(S_EXCL), X(E_EXCL), _______, _______, _______, _______, _______, _______, _______, KC_QUOT, KC_LBRC,
-  _______, X(S_QSTN), X(E_QSTN), _______, _______, _______, _______, _______, _______, _______, KC_BSLS, _______,
+  KC_GRV,    KC_1,      KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_LPRN, KC_RPRN, KC_EQL,
+  _______, X(S_QSTN), X(E_QSTN), _______, _______, _______, _______, _______, _______, KC_LBRC, KC_RBRC, _______,
+  _______, X(S_EXCL), X(E_EXCL), _______, _______, _______, _______, _______, _______, KC_BSLS, _______, _______,
   _______,   _______,   _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
 ),
 
@@ -99,43 +115,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  |   -  |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |   ¡  |   !  |      |      |      |      |      |      |      |   '  |   [  |
+ * |      |   ¡  |   !  |      |      |      |      |      |      |      |   '  |      |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |   ¿  |   ?  |      |      |      |      |      |      |      |   \  |      |
+ * |      |   ¿  |   ?  |      |      |      |      |      |      |   \  |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |             |      | Home | PgDn | PgUp | End  |
  * `-----------------------------------------------------------------------------------'
  */
 [_RAISE] = LAYOUT_planck_grid(
   KC_GRV,    KC_1,      KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
-  _______, X(S_EXCL), X(E_EXCL), _______, _______, _______, _______, _______, _______, _______, KC_QUOT, KC_LBRC,
-  _______, X(S_QSTN), X(E_QSTN), _______, _______, _______, _______, _______, _______, _______, KC_BSLS, _______,
+  _______, X(S_QSTN), X(E_QSTN), _______, _______, _______, _______, _______, _______, _______, KC_QUOT, KC_DQT,
+  _______, X(S_EXCL), X(E_EXCL), _______, _______, _______, _______, _______, _______, KC_BSLS, _______, _______,
   _______,   _______,   _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
 ),
 
-/* Interact
- * ,-----------------------------------------------------------------------------------.
- * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  |   =  |
- * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      | XXXX | XXXX | XXXX | XXXX | XXXX | XXXX | XXXX | XXXX | XXXX | XXXX |   ]  |
- * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      | XXXX | XXXX | XXXX | XXXX | XXXX | XXXX | XXXX | XXXX | Clic | MsUp | Clic |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |      |      | MsLf | MsDn | MsRg |
- * `-----------------------------------------------------------------------------------'
- */
-[_INTERACT] = LAYOUT_planck_grid(
-  KC_GRV,    KC_1,      KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_EQL,
-  _______,   XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_RBRC,
-  _______,   XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BTN1, KC_MS_U, KC_BTN2,
-  _______,   _______,   _______, _______, _______, _______, _______, _______, _______, KC_MS_L, KC_MS_D, KC_MS_R
-),
 
 /* Adjust (Lower + Raise)
  * ,-----------------------------------------------------------------------------------.
- * |      | Reset|      |      |      |      |      |      |      |      |      |  Del |
+ * |QWERTY| F1   | F2   | F3   | F4   | F5   |      | F10  | F11  | F12  |PrScr | Del  |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |      |      |Aud on|Audoff|AGnorm|AGswap|      |      |      |      |      |
+ * |      |PROG  |      |Aud on|Audoff|AGnorm|AGswap|      |      |      |NUMPAD|      |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |      |Voice-|Voice+|Mus on|Musoff|MIDIon|MIDIof|      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -143,21 +142,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_ADJUST] = LAYOUT_planck_grid(
-    QWERTY,  RESET,   DEBUG,   RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD,  RGB_VAI, RGB_VAD, KC_DEL ,
-    _______, _______, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, _______, _______,  _______, _______, _______,
-    _______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  TERM_ON, TERM_OFF, _______, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, NUMPAD
+    QWERTY,  _______, _______, RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD,  RGB_VAI, RGB_VAD, KC_DEL ,
+    _______, _______, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, _______, _______,  _______, NUMPAD,  _______,
+    DEBUG,   MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  TERM_ON, TERM_OFF, _______, _______, _______,
+    RESET,   _______, _______, _______, _______, _______, _______, _______, _______,  RGB_M_SN, RGB_M_K, RGB_M_G
 ),
 
 /* Numpad
  * ,-----------------------------------------------------------------------------------.
- * |      |  A   |  B   |  C   |  D   |  E   |      |  _   |   7  |   8  |   9  |      |
+ * |      |  A   |  B   |  C   |  D   |  E   | XXXX |  _   |   7  |   8  |   9  |      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |  =   |  +   |  -   |  *   |  /   |      |  .   |   4  |   5  |   6  |      |
+ * |      |  =   |  +   |  -   |  *   |  /   | XXXX |  .   |   4  |   5  |   6  |      |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |  =   |  (   |  )   |  &   |  |   |      |  ,   |   1  |   2  |   3  |      |
+ * |      |  =   |  (   |  )   |  &   |  |   | XXXX |  ,   |   1  |   2  |   3  |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |  =   |  [   |  ]   |      |             |      |   #  |   0  |   $  |      |
+ * |      |  =   |  [   |  ]   |      |             |      |   #  |   0  |   $  | XXXX |
  * `-----------------------------------------------------------------------------------'
  */
 [_NUMPAD] = LAYOUT_planck_grid(
@@ -285,25 +284,26 @@ void dip_update(uint8_t index, bool active) {
 }
 
 void matrix_scan_user(void) {
-  //#ifdef AUDIO_ENABLE
-  //  if (muse_mode) {
-  //    if (muse_counter == 0) {
-  //      uint8_t muse_note = muse_offset + SCALE[muse_clock_pulse()];
-  //      if (muse_note != last_muse_note) {
-  //        stop_note(compute_freq_for_midi_note(last_muse_note));
-  //        play_note(compute_freq_for_midi_note(muse_note), 0xF);
-  //        last_muse_note = muse_note;
-  //      }
-  //    }
-  //    muse_counter = (muse_counter + 1) % muse_tempo;
-  //  }
-  //#endif
+  #ifdef AUDIO_ENABLE
+    if (muse_mode) {
+      if (muse_counter == 0) {
+        uint8_t muse_note = muse_offset + SCALE[muse_clock_pulse()];
+        if (muse_note != last_muse_note) {
+          stop_note(compute_freq_for_midi_note(last_muse_note));
+          play_note(compute_freq_for_midi_note(muse_note), 0xF);
+          last_muse_note = muse_note;
+        }
+      }
+      muse_counter = (muse_counter + 1) % muse_tempo;
+    }
+  #endif
 
   uint16_t layer = biton32(layer_state);
 
   // INSERT CODE HERE: turn off all leds
   switch (layer) {
     case QWERTY:
+      //only works with void rgb_matrix_indicators_user(void) {
       rgb_matrix_set_color(42, 0x00, 0xFF, 0xFF);
       rgb_matrix_set_color(41, 0xFF, 0xFF, 0x00);
       rgb_matrix_set_color(40, 0x00, 0xFF, 0x00);
@@ -327,19 +327,6 @@ bool music_mask_user(uint16_t keycode) {
   }
 }
 
-//void rgb_matrix_indicators_user(void) {
-//  rgb_matrix_set_color(42, 0x00, 0xFF, 0xFF);
-//  rgb_matrix_set_color(41, 0xFF, 0xFF, 0x00);
-//  rgb_matrix_set_color(40, 0x00, 0xFF, 0x00);
-//  rgb_matrix_set_color(39, 0x00, 0xFF, 0xFF);
-//  rgb_matrix_set_color(38, 0xFF, 0xFF, 0x00);
-//  rgb_matrix_set_color(37, 0x00, 0xFF, 0x00);
-//  rgb_matrix_set_color(36, 0x00, 0xFF, 0xFF);
-//  rgb_matrix_set_color(35, 0xFF, 0xFF, 0x00);
-//  rgb_matrix_set_color(34, 0x00, 0xFF, 0x00);
-//}
-
-
 // Unnecesary after executing any of these modes
 // UC_M_OS // Mac OS X 
 // UC_M_LN // Linux
@@ -350,21 +337,3 @@ void matrix_init_user(void) {
     //set_unicode_input_mode(UC_OSX); 
     //set_unicode_input_mode(UC_WINC); 
 };
-
-// Concat arrays
-void *array_concat(const void *a, size_t an,
-                   const void *b, size_t bn, size_t s)
-{
-  char *p = malloc(s * (an + bn));
-  memcpy(p, a, an*s);
-  memcpy(p + an*s, b, bn*s);
-  return p;
-}
-
-// Use as
-// const int a[] = { 1, 2, 3, 4, 5 };
-// const int b[] = { 6, 7, 8, 9, 0 };
-// int *c = ARRAY_CONCAT(int, a, 5, b, 5);
-// for(i = 0; i < 10; i++)
-//   printf("%d\n", c[i]);
-// free(c);
