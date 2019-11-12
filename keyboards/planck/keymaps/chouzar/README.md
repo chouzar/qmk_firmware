@@ -4,7 +4,7 @@
 
 ```
 make planck/light:chouzar
-make planck/light:chouzar:dfu
+sudo make planck/light:chouzar:dfu
 ```
 
 
