@@ -71,7 +71,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB,     KC_Q,    KC_W,    KC_E,     KC_R,  KC_T,       KC_Y,      KC_U,   KC_I,       KC_O,    KC_P,    TD(BRACKETS),
     KC_ESC,     KC_A,    KC_S,    KC_D,     KC_F,  KC_G,       KC_H,      KC_J,   KC_K,       KC_L,    KC_SCLN, KC_QUOTE,
     TD(LSHIFT), KC_Z,    KC_X,    KC_C,     KC_V,  KC_B,       KC_N,      KC_M,   KC_COMM,    KC_DOT,  KC_UP,   TD(RSHIFT),
-    INTERACT,   KC_LCTL, KC_LGUI, KC_ALT,   LOWER, KC_SPACE,   KC_SPACE,  RAISE,  TD(SLASH),  KC_LEFT, KC_DOWN, KC_RIGHT
+    INTERACT,   KC_LCTL, KC_LGUI, KC_LALT,  LOWER, KC_SPACE,   KC_SPACE,  RAISE,  TD(SLASH),  KC_LEFT, KC_DOWN, KC_RIGHT
 ),
 
 /* INTERACT
@@ -89,7 +89,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_GRV,  _______, _______, _______, _______,  _______,  _______, _______,          KC_EQL,       TD(SUM),      TD(MULT),   KC_BSPACE,
   _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,    KC_F5,    _______, TD(PARENTHESIS),  TD(BRACKETS), TD(CURLY),    TD(PIPE),   KC_ENTER,
   _______, KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10,   _______, KC_QUESTION,      KC_EXCLAIM,   KC_MS_BTN1,   KC_MS_UP,   KC_MS_BTN2,
-  _______, _______, KC_F11,  KC_F12,  _______,  _______,  _______, _______,          XXXXXXX,      KC_MS_LEFT,   KC_MS_DOWN, KC_MS_RIGHT,
+  _______, _______, KC_F11,  KC_F12,  _______,  _______,  _______, _______,          XXXXXXX,      KC_MS_LEFT,   KC_MS_DOWN, KC_MS_RIGHT
 ),
 
 /* Lower
@@ -107,7 +107,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_GRAVE, TD(K1),  TD(K2),  TD(K3),  TD(K4),  TD(K5),  TD(K6),  TD(K7),           TD(K8),       TD(K9),     TD(K0),   TD(UPPER),
   _______,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   _______, TD(PARENTHESIS),  TD(BRACKETS), TD(CURLY),  TD(PIPE), KC_ENTER,
   _______,  KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______, KC_QUESTION,      KC_EXCLAIM,   _______,    KC_PGUP,  _______,
-  _______,  _______, KC_F11,  KC_F12,  _______, _______, _______, _______,          _______,      KC_HOME,    KC_DOWN,  KC_END,
+  _______,  _______, KC_F11,  KC_F12,  _______, _______, _______, _______,          _______,      KC_HOME,    KC_DOWN,  KC_END
 ),
 
 /* Raise
@@ -125,7 +125,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_GRAVE, TD(K1),  TD(K2),  TD(K3),  TD(K4),  TD(K5),  TD(K6),  TD(K7),           TD(K8),       TD(K9),     TD(K0),   TD(UPPER),
   _______,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   _______, TD(PARENTHESIS),  TD(BRACKETS), TD(CURLY),  TD(PIPE), KC_ENTER,
   _______,  KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______, KC_QUESTION,      KC_EXCLAIM,   _______,    KC_PGUP,  _______,
-  _______,  _______, KC_F11,  KC_F12,  _______, _______, _______, _______,          _______,      KC_HOME,    KC_DOWN,  KC_END,
+  _______,  _______, KC_F11,  KC_F12,  _______, _______, _______, _______,          _______,      KC_HOME,    KC_DOWN,  KC_END
 ),
 
 /* Adjust (Lower + Raise)
