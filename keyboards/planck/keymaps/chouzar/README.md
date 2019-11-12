@@ -1,5 +1,11 @@
 # chouzar keyboard
 
+## Installing QMK launcher
+
+```
+sh util/qmk install.sh
+```
+
 ## Flashing the keyboard
 
 ```
