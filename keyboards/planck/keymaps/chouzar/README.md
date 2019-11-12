@@ -1,5 +1,13 @@
 # chouzar keyboard
 
+## Flashing the keyboard
+
+```
+make planck/light:chouzar
+make planck/light:chouzar:dfu
+```
+
+
 This is just a simple qwerty layout focused familiarity for english and spanish layouts.
 
 Makes it easy to write ñ and á é í ó ú. 
