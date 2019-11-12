@@ -19,29 +19,28 @@
 #include "stdlib.h"
 #include "stdio.h"
 
+// Tap Dance Declarations
+enum {
+  LSHIFT, RSHIFT,
+  PARENTHESIS, BRACKETS, CURLY,
+  SUM, MULT,
+  SLASH, PIPE,
+  K0, K1, K2, K3, K4,
+  K5, K6, K7, K8, K9,
+  UPPER
+  //KCARRY, KLCAPS, KRCAPS, KGRAVE, KQUOTE, KSCORE
+};
+
 enum planck_layers {
-  _QWERTY,
-  _LOWER,
-  _RAISE,
-  _ADJUST,
-  _NUMPAD,
-  _INTERACT
+  _QWERTY, _INTERACT, _LOWER, _RAISE, _ADJUST, _NUMPAD
 };
 
 enum planck_keycodes {
-  QWERTY = SAFE_RANGE,
-  BACKLIT,
-  EXT_PLV,
-  NUMPAD,
+  QWERTY = SAFE_RANGE, BACKLIT, EXT_PLV, NUMPAD,
 };
 
 enum unicode_names {
-  L_ENNE,
-  H_ENNE,
-  S_EXCL,
-  E_EXCL,
-  S_QSTN,
-  E_QSTN
+  L_ENNE, H_ENNE, S_EXCL, E_EXCL, S_QSTN, E_QSTN
 };
 
 const uint32_t PROGMEM unicode_map[] = {
@@ -59,78 +58,88 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Qwerty
  * ,-----------------------------------------------------------------------------------.
- * |Esc   |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  |Bksp  |
+ * |Tab   |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  |  []  |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |Tab   |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |Enter |
+ * |Esc   |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |   '  |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |Shift |   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |  /   |Shift |
+ * |Shift |   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |  Up  |Shift |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |Ctrl  | Meta | Alt  |Inter |Lower |    Space    |Raise | Left | Low  |  Up  |Right |
+ * |Intrct| Ctrl | Meta | Alt  |Lower |    Space    |Raise |  /\  | Left | Down |Right |
  * `-----------------------------------------------------------------------------------'
  */
 [_QWERTY] = LAYOUT_planck_grid(
-    KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,   KC_I,    KC_O,    KC_P,    KC_BSPC,
-    KC_TAB,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,   KC_K,    KC_L,    KC_SCLN, KC_ENT,
-    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
-    KC_LCTL, KC_LGUI, KC_LALT, INTERACT,LOWER,   KC_SPC,  KC_SPC,  RAISE,  KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT
+    KC_TAB,     KC_Q,    KC_W,    KC_E,     KC_R,  KC_T,       KC_Y,      KC_U,   KC_I,       KC_O,    KC_P,    TD(BRACKETS),
+    KC_ESC,     KC_A,    KC_S,    KC_D,     KC_F,  KC_G,       KC_H,      KC_J,   KC_K,       KC_L,    KC_SCLN, KC_QUOTE,
+    TD(LSHIFT), KC_Z,    KC_X,    KC_C,     KC_V,  KC_B,       KC_N,      KC_M,   KC_COMM,    KC_DOT,  KC_UP,   TD(RSHIFT),
+    INTERACT,   KC_LCTL, KC_LGUI, KC_ALT,   LOWER, KC_SPACE,   KC_SPACE,  RAISE,  TD(SLASH),  KC_LEFT, KC_DOWN, KC_RIGHT
 ),
 
-/* Interact
+/* INTERACT
  * ,-----------------------------------------------------------------------------------.
- * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  |   -  |
+ * |   `  |      |      |      |      |      |      |      |   =  |  +-  | * /  | Bcks |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |   ¿  |   ?  |      |      |      |      |      |      |      |   '  |      |
+ * |      |  F1  |  F2  |  F3  |  F4  |  F5  |      |  ()  |  []  |  {}  |  |>  |Enter |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |   ¡  |   !  |      |      |      |      |      |      |   \  |      |      |
+ * |      |  F6  |  F7  |  F8  |  F9  |  F10 |      |  ¿?  |  ¡!  |LefClk|MouseU|RigClk|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |      | Home | PgDn | PgUp | End |
+ * |      |      |  F11 |  F12 |      |             |      | XXXX |MouseL|MouseD|MouseR|
  * `-----------------------------------------------------------------------------------'
  */
 [_INTERACT] = LAYOUT_planck_grid(
-  KC_GRV,    KC_1,      KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
-  _______, X(S_QSTN), X(E_QSTN), _______, _______, _______, _______, _______, _______, _______, KC_QUOT, KC_DQT,
-  _______, X(S_EXCL), X(E_EXCL), _______, _______, _______, _______, _______, _______, KC_BSLS, _______, _______,
-  _______,   _______,   _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
+  KC_GRV,  _______, _______, _______, _______,  _______,  _______, _______,          KC_EQL,       TD(SUM),      TD(MULT),   KC_BSPACE,
+  _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,    KC_F5,    _______, TD(PARENTHESIS),  TD(BRACKETS), TD(CURLY),    TD(PIPE),   KC_ENTER,
+  _______, KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10,   _______, KC_QUESTION,      KC_EXCLAIM,   KC_MS_BTN1,   KC_MS_UP,   KC_MS_BTN2,
+  _______, _______, KC_F11,  KC_F12,  _______,  _______,  _______, _______,          XXXXXXX,      KC_MS_LEFT,   KC_MS_DOWN, KC_MS_RIGHT,
 ),
 
 /* Lower
  * ,-----------------------------------------------------------------------------------.
- * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   (  |   )  |   =  |
+ * |   `  |  1!  |  2@  |  3#  |  4$  |  5%  |  6^  |  7&  |  8*  |  9(  |  0)  |  -+  |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |   ¿  |   ?  |      |      |      |      |      |      |   [  |   ]  |      |
+ * |      |  F1  |  F2  |  F3  |  F4  |  F5  |      |  ()  |  []  |  {}  |  |>  |Enter |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |   ¡  |   !  |      |      |      |      |      |      |   \  |      |      |
+ * |      |  F6  |  F7  |  F8  |  F9  |  F10 |      |  ¿?  |  ¡!  |      | PgUp |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |      | Home | PgDn | PgUp | End  |
+ * |      |      |  F11 |  F12 |      |             |      |      | Home | PgDn | End  |
  * `-----------------------------------------------------------------------------------'
  */
 [_LOWER] = LAYOUT_planck_grid(
-  KC_GRV,    KC_1,      KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_LPRN, KC_RPRN, KC_EQL,
-  _______, X(S_QSTN), X(E_QSTN), _______, _______, _______, _______, _______, _______, KC_LBRC, KC_RBRC, _______,
-  _______, X(S_EXCL), X(E_EXCL), _______, _______, _______, _______, _______, _______, KC_BSLS, _______, _______,
-  _______,   _______,   _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
+  KC_GRAVE, TD(K1),  TD(K2),  TD(K3),  TD(K4),  TD(K5),  TD(K6),  TD(K7),           TD(K8),       TD(K9),     TD(K0),   TD(UPPER),
+  _______,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   _______, TD(PARENTHESIS),  TD(BRACKETS), TD(CURLY),  TD(PIPE), KC_ENTER,
+  _______,  KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______, KC_QUESTION,      KC_EXCLAIM,   _______,    KC_PGUP,  _______,
+  _______,  _______, KC_F11,  KC_F12,  _______, _______, _______, _______,          _______,      KC_HOME,    KC_DOWN,  KC_END,
 ),
 
 /* Raise
  * ,-----------------------------------------------------------------------------------.
- * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  |   -  |
+ * |   `  |  1!  |  2@  |  3#  |  4$  |  5%  |  6^  |  7&  |  8*  |  9(  |  0)  |  -+  |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |   ¡  |   !  |      |      |      |      |      |      |      |   '  |      |
+ * |      |  F1  |  F2  |  F3  |  F4  |  F5  |      |  ()  |  []  |  {}  |  |>  |Enter |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |   ¿  |   ?  |      |      |      |      |      |      |   \  |      |      |
+ * |      |  F6  |  F7  |  F8  |  F9  |  F10 |      |  ¿?  |  ¡!  |      | PgUp |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |      | Home | PgDn | PgUp | End  |
+ * |      |      |  F11 |  F12 |      |             |      |      | Home | PgDn | End  |
  * `-----------------------------------------------------------------------------------'
  */
 [_RAISE] = LAYOUT_planck_grid(
-  KC_GRV,    KC_1,      KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
-  _______, X(S_QSTN), X(E_QSTN), _______, _______, _______, _______, _______, _______, _______, KC_QUOT, KC_DQT,
-  _______, X(S_EXCL), X(E_EXCL), _______, _______, _______, _______, _______, _______, KC_BSLS, _______, _______,
-  _______,   _______,   _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
+  KC_GRAVE, TD(K1),  TD(K2),  TD(K3),  TD(K4),  TD(K5),  TD(K6),  TD(K7),           TD(K8),       TD(K9),     TD(K0),   TD(UPPER),
+  _______,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   _______, TD(PARENTHESIS),  TD(BRACKETS), TD(CURLY),  TD(PIPE), KC_ENTER,
+  _______,  KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______, KC_QUESTION,      KC_EXCLAIM,   _______,    KC_PGUP,  _______,
+  _______,  _______, KC_F11,  KC_F12,  _______, _______, _______, _______,          _______,      KC_HOME,    KC_DOWN,  KC_END,
 ),
 
-
 /* Adjust (Lower + Raise)
+
+ * ,-----------------------------------------------------------------------------------.
+ * |QWERTY|      |      |      |      |      |      |      |BriUp |VolUp |PrScr |Delete|
+ * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * |NUMPAD|      |      |      |      |      |      |      |BriDn |VolDn |Disply|Insert|
+ * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * |PROG  |      |      |      |      |      |      |      |      |LefClk|MouseU|RigClk|
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |RESET |DEBUG |      |      |      |             |      |      |MouseL|MouseD|MouseR|
+ * `-----------------------------------------------------------------------------------'
+
  * ,-----------------------------------------------------------------------------------.
  * |QWERTY| F1   | F2   | F3   | F4   | F5   |      | F10  | F11  | F12  |PrScr | Del  |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
@@ -149,6 +158,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 /* Numpad
+
+ * ,-----------------------------------------------------------------------------------.
+ * |      |  A   |  B   |  C   |  D   |  E   | XXXX |      |  _   |   7  |   8  |   9  |
+ * |------+------+------+------+------+-------------+------+-------------+------+------|
+ * |      |  =   |  +   |  -   |  *   |  /   | XXXX |      |  .   |   4  |   5  |   6  |
+ * |------+------+------+------+------+------|------+------+-------------+------+------|
+ * |      |  =   |  (   |  )   |  &   |  |   | XXXX |      |  ,   |   1  |   2  |   3  |
+ * |------+------+------+------+------+------+------+------+-------------+------+------|
+ * |      |  =   |  [   |  ]   |      |             |      |      |   #  |   0  |   $  |
+ * `----------------------------------------------------------------------------------'
+
  * ,-----------------------------------------------------------------------------------.
  * |      |  A   |  B   |  C   |  D   |  E   | XXXX |  _   |   7  |   8  |   9  |      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
@@ -167,7 +187,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 )
 
 };
-
 
 #ifdef AUDIO_ENABLE
   float plover_song[][2]     = SONG(PLOVER_SOUND);
@@ -337,3 +356,37 @@ void matrix_init_user(void) {
     //set_unicode_input_mode(UC_OSX); 
     //set_unicode_input_mode(UC_WINC); 
 };
+
+//Tap Dance Definitions
+qk_tap_dance_action_t tap_dance_actions[] = {
+  [LSHIFT] = ACTION_TAP_DANCE_DOUBLE(KC_LSHIFT,   KC_CAPSLOCK), 
+  [RSHIFT] = ACTION_TAP_DANCE_DOUBLE(KC_RSHIFT,   KC_CAPSLOCK),
+
+  [PARENTHESIS] = ACTION_TAP_DANCE_DOUBLE(KC_LPRN,              KC_RPRN),
+  [BRACKETS]    = ACTION_TAP_DANCE_DOUBLE(KC_LBRACKET,          KC_RBRACKET),
+  [CURLY]       = ACTION_TAP_DANCE_DOUBLE(KC_LEFT_CURLY_BRACE,  KC_RIGHT_CURLY_BRACE),
+
+  [SUM]  = ACTION_TAP_DANCE_DOUBLE(KC_KP_PLUS,      KC_KP_MINUS),
+  [MULT] = ACTION_TAP_DANCE_DOUBLE(KC_KP_ASTERISK,  KC_KP_SLASH),
+
+  [SLASH] = ACTION_TAP_DANCE_DOUBLE(KC_SLASH, KC_BSLASH),
+  [PIPE]  = ACTION_TAP_DANCE_DOUBLE(KC_PIPE,  KC_RIGHT_ANGLE_BRACKET),
+
+  [K1]     = ACTION_TAP_DANCE_DOUBLE(KC_1, KC_EXCLAIM),
+  [K2]     = ACTION_TAP_DANCE_DOUBLE(KC_2, KC_AT),
+  [K3]     = ACTION_TAP_DANCE_DOUBLE(KC_3, KC_HASH),
+  [K4]     = ACTION_TAP_DANCE_DOUBLE(KC_4, KC_DOLLAR),
+  [K5]     = ACTION_TAP_DANCE_DOUBLE(KC_5, KC_PERCENT),
+  [K6]     = ACTION_TAP_DANCE_DOUBLE(KC_6, KC_CIRCUMFLEX),
+  [K7]     = ACTION_TAP_DANCE_DOUBLE(KC_7, KC_AMPERSAND),
+  [K8]     = ACTION_TAP_DANCE_DOUBLE(KC_8, KC_ASTERISK),
+  [K9]     = ACTION_TAP_DANCE_DOUBLE(KC_9, KC_LEFT_PAREN),
+  [K0]     = ACTION_TAP_DANCE_DOUBLE(KC_0, KC_RIGHT_PAREN),
+
+  [UPPER] = ACTION_TAP_DANCE_DOUBLE(KC_MINUS, KC_EQUAL)
+  //[KCARRY] = ACTION_TAP_DANCE_DOUBLE(KC_SPACE, KC_ENTER)
+  //[KSCORE] = ACTION_TAP_DANCE_DOUBLE(KC_VMINS, KC_UNDERSCORE)
+  //[KQUOTE] = ACTION_TAP_DANCE_DOUBLE(KC_QUOT, KC_DQT)
+  //[KGRAVE] = ACTION_TAP_DANCE_DOUBLE(KC_GRAVE, KC_TILDE),
+};
+
